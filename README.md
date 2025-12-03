@@ -70,3 +70,5 @@ Bot will delete those messages and post:
 ```
 @User Hello..How are you..Today?
 ```
+
+[My Instance's Invite Link](https://discord.com/oauth2/authorize?client_id=1445638105687265290&permissions=76800&integration_type=0&scope=bot)
