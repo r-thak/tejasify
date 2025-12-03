@@ -72,7 +72,7 @@ async def on_message(message):
                     pass
 
                 # Create combined message
-                combined_content = f"{message.author.mention} {tracking['messages'][0].content}..{tracking['messages'][1].content}"
+                combined_content = f"{message.author.name}:\n{tracking['messages'][0].content}..{tracking['messages'][1].content}"
                 bot_msg = await message.channel.send(combined_content)
                 tracking['bot_message'] = bot_msg
             else:
@@ -109,7 +109,9 @@ async def help_tejasify(ctx):
 
     When a user sends 2+ messages in a row:
     - The messages are deleted
-    - A combined message is posted with format: @user message1..message2..message3
+    - A combined message is posted with format:
+      User:
+      message1..message2..message3
 
     Commands:
     - !ping - Check bot latency
