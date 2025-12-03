@@ -14,7 +14,7 @@ intents.messages = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 # Dictionary to track combined messages
-# Format: {channel_id: {'user_id': user_id, 'messages': [msg1, msg2, ...], 'bot_message': bot_msg_obj}}
+# Format: {channel_id: {'user_id': user_id, 'messages': [msg1, msg2, ...], 'bot_message': bot_msg_obj, 'combined_content': str}}
 channel_tracking = {}
 
 
@@ -41,7 +41,8 @@ async def on_message(message):
         channel_tracking[channel_id] = {
             'user_id': user_id,
             'messages': [message],
-            'bot_message': None
+            'bot_message': None,
+            'combined_content': None
         }
         return
 
@@ -75,13 +76,14 @@ async def on_message(message):
                 combined_content = f"{message.author.display_name}:\n{tracking['messages'][0].content}..{tracking['messages'][1].content}"
                 bot_msg = await message.channel.send(combined_content)
                 tracking['bot_message'] = bot_msg
+                tracking['combined_content'] = combined_content
             else:
                 # Edit existing bot message to append new content
-                if tracking['bot_message']:
+                if tracking['bot_message'] and tracking['combined_content']:
                     try:
-                        current_content = tracking['bot_message'].content
-                        new_content = f"{current_content}..{message.content}"
+                        new_content = f"{tracking['combined_content']}..{message.content}"
                         await tracking['bot_message'].edit(content=new_content)
+                        tracking['combined_content'] = new_content
                     except Exception as e:
                         print(f"Error editing message: {e}")
     else:
@@ -89,7 +91,8 @@ async def on_message(message):
         channel_tracking[channel_id] = {
             'user_id': user_id,
             'messages': [message],
-            'bot_message': None
+            'bot_message': None,
+            'combined_content': None
         }
 
 
