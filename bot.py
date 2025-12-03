@@ -72,7 +72,7 @@ async def on_message(message):
                     pass
 
                 # Create combined message
-                combined_content = f"{message.author.name}:\n{tracking['messages'][0].content}..{tracking['messages'][1].content}"
+                combined_content = f"{message.author.display_name}:\n{tracking['messages'][0].content}..{tracking['messages'][1].content}"
                 bot_msg = await message.channel.send(combined_content)
                 tracking['bot_message'] = bot_msg
             else:
