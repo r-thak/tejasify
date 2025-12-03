@@ -23,103 +23,39 @@ tejasify allows you to make any discord server into a discord server with career
 
 ### Installation
 
-#### Option 1: Docker (Recommended)
-
 1. Clone this repository:
 ```bash
 git clone <repository-url>
 cd tejasify
 ```
 
-2. Create a `.env` file:
+2. Create a `.env` file and add your Discord bot token:
 ```bash
 cp .env.example .env
-```
-
-3. Edit `.env` and add your Discord bot token:
-```
+nano .env
 DISCORD_BOT_TOKEN=your_actual_token_here
 ```
 
-4. Build and run with Docker Compose:
+3. Build and run with Docker Compose:
 ```bash
 docker-compose up -d
 ```
 
-5. View logs:
+View logs:
 ```bash
 docker-compose logs -f
 ```
 
-6. Stop the bot:
+Stop the bot:
 ```bash
 docker-compose down
 ```
 
-#### Option 2: Manual Installation
-
-1. Clone this repository:
-```bash
-git clone <repository-url>
-cd tejasify
-```
-
-2. Create a virtual environment (recommended):
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Create a `.env` file:
-```bash
-cp .env.example .env
-```
-
-5. Edit `.env` and add your Discord bot token:
-```
-DISCORD_BOT_TOKEN=your_actual_token_here
-```
-
-### Running the Bot
-
-**With Docker:**
-```bash
-docker-compose up -d
-```
-
-**Without Docker:**
-```bash
-python bot.py
-```
-
-You should see a message confirming the bot has connected to Discord.
-
-## Usage
-
-Once the bot is running and in your server:
-
-1. The bot automatically monitors all channels it has access to
-2. When a user sends 2+ messages in a row, the bot will:
-   - Delete those messages
-   - Post a combined version with messages separated by `..`
-3. If the user continues sending messages, the bot will keep editing its message to append them
 
 ### Commands
 
 - `!ping` - Check if the bot is responsive and see latency
 - `!help_tejasify` - Show help information
-
-## Required Bot Permissions
-
-- Read Messages/View Channels
-- Send Messages
-- Manage Messages (to delete user messages)
-- Read Message History
 
 ## Example
 
@@ -134,9 +70,3 @@ Bot will delete those messages and post:
 ```
 @User Hello..How are you..Today?
 ```
-
-## Troubleshooting
-
-- **Bot not responding**: Make sure Message Content Intent is enabled in the Discord Developer Portal
-- **Can't delete messages**: Ensure the bot has "Manage Messages" permission
-- **Bot not seeing messages**: Check that the bot has "Read Messages" and "Read Message History" permissions
