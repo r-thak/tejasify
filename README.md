@@ -2,8 +2,6 @@
 
 tejasify allows you to make any discord server into a discord server with career_maxxing in it by condensing several successive messages into a single message separated by two periods ".."
 
-## Features
-
 - Automatically detects when a user sends 2+ consecutive messages
 - Deletes the duplicate messages
 - Posts a combined message in format: `@user message1..message2..message3`
@@ -11,14 +9,6 @@ tejasify allows you to make any discord server into a discord server with career
 - Only resets when a different user (not the bot) sends a message
 
 ## Setup
-
-### Prerequisites
-
-- Python 3.8 or higher
-- A Discord bot token
-
-### Getting a Discord Bot Token
-
 1. Go to the [Discord Developer Portal](https://discord.com/developers/applications)
 2. Click "New Application" and give it a name
 3. Go to the "Bot" section and click "Add Bot"
@@ -28,7 +18,7 @@ tejasify allows you to make any discord server into a discord server with career
    - Server Members Intent (optional)
 6. Go to OAuth2 → URL Generator
 7. Select scopes: `bot`
-8. Select bot permissions: `Send Messages`, `Read Messages/View Channels`, `Read Message History`, `Manage Messages`
+8. Select bot permissions: `View Channels`, `Send Messages`, `Manage Message`, `Read Message History`
 9. Copy the generated URL and open it in your browser to invite the bot to your server
 
 ### Installation
