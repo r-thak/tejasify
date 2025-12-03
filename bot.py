@@ -14,7 +14,7 @@ intents.messages = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 # Dictionary to track combined messages
-# Format: {channel_id: {'user_id': user_id, 'messages': [msg1, msg2, ...], 'bot_message': bot_msg_obj, 'combined_content': str}}
+# Format: {channel_id: {'user_id': user_id, 'messages': [msg1, msg2, ...], 'bot_message': bot_msg_obj, 'combined_content': str, 'embeds': [embed1, embed2, ...]}}
 channel_tracking = {}
 
 
@@ -42,7 +42,8 @@ async def on_message(message):
             'user_id': user_id,
             'messages': [message],
             'bot_message': None,
-            'combined_content': None
+            'combined_content': None,
+            'embeds': []
         }
         return
 
@@ -51,6 +52,10 @@ async def on_message(message):
     # If this is a message from the same user
     if tracking['user_id'] == user_id:
         tracking['messages'].append(message)
+
+        # Collect embeds from the new message
+        if message.embeds:
+            tracking['embeds'].extend(message.embeds)
 
         # If we have at least 2 messages, process them
         if len(tracking['messages']) >= 2:
@@ -72,9 +77,16 @@ async def on_message(message):
                 except:
                     pass
 
+                # Collect embeds from the first message
+                all_embeds = []
+                if tracking['messages'][0].embeds:
+                    all_embeds.extend(tracking['messages'][0].embeds)
+                if tracking['messages'][1].embeds:
+                    all_embeds.extend(tracking['messages'][1].embeds)
+
                 # Create combined message
                 combined_content = f"{message.author.display_name}:\n{tracking['messages'][0].content}..{tracking['messages'][1].content}"
-                bot_msg = await message.channel.send(combined_content)
+                bot_msg = await message.channel.send(content=combined_content, embeds=all_embeds)
                 tracking['bot_message'] = bot_msg
                 tracking['combined_content'] = combined_content
             else:
@@ -82,7 +94,7 @@ async def on_message(message):
                 if tracking['bot_message'] and tracking['combined_content']:
                     try:
                         new_content = f"{tracking['combined_content']}..{message.content}"
-                        await tracking['bot_message'].edit(content=new_content)
+                        await tracking['bot_message'].edit(content=new_content, embeds=tracking['embeds'])
                         tracking['combined_content'] = new_content
                     except Exception as e:
                         print(f"Error editing message: {e}")
@@ -92,7 +104,8 @@ async def on_message(message):
             'user_id': user_id,
             'messages': [message],
             'bot_message': None,
-            'combined_content': None
+            'combined_content': None,
+            'embeds': []
         }
 
 
@@ -115,6 +128,7 @@ async def help_tejasify(ctx):
     - A combined message is posted with format:
       User:
       message1..message2..message3
+    - Embeds from all messages are preserved and included
 
     Commands:
     - !ping - Check bot latency
