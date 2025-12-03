@@ -23,6 +23,41 @@ tejasify allows you to make any discord server into a discord server with career
 
 ### Installation
 
+#### Option 1: Docker (Recommended)
+
+1. Clone this repository:
+```bash
+git clone <repository-url>
+cd tejasify
+```
+
+2. Create a `.env` file:
+```bash
+cp .env.example .env
+```
+
+3. Edit `.env` and add your Discord bot token:
+```
+DISCORD_BOT_TOKEN=your_actual_token_here
+```
+
+4. Build and run with Docker Compose:
+```bash
+docker-compose up -d
+```
+
+5. View logs:
+```bash
+docker-compose logs -f
+```
+
+6. Stop the bot:
+```bash
+docker-compose down
+```
+
+#### Option 2: Manual Installation
+
 1. Clone this repository:
 ```bash
 git clone <repository-url>
@@ -52,6 +87,12 @@ DISCORD_BOT_TOKEN=your_actual_token_here
 
 ### Running the Bot
 
+**With Docker:**
+```bash
+docker-compose up -d
+```
+
+**Without Docker:**
 ```bash
 python bot.py
 ```
