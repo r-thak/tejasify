@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  tejasify-bot:
+    build: .
+    container_name: tejasify-bot
+    restart: unless-stopped
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+    env_file:
+      - .env
